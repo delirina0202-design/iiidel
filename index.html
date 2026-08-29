@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IIIDEL — инженерный перевод для B2B</title>
+<meta name="description" content="IIIDEL — система проектирования коммерческих коммуникаций для сложных B2B-продуктов. Мы не проектируем документы. Мы проектируем понимание.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@500;600;700;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+  :root{
+    --color-bg:#170F0E;
+    --color-bg-soft:#1E1513;
+    --color-bg-raise:#241917;
+    --color-accent:#E8382A;
+    --color-accent-dark:#B72A1E;
+    --color-paper:#D9D1C3;
+    --color-paper-dark:#C7BCA8;
+    --color-text:#F4EFE7;
+    --color-text-dim:#9C948C;
+    --color-line:rgba(244,239,231,0.14);
+    --color-teal:#7FC9BE;
+    --font-display:'Golos Text', sans-serif;
+    --font-body:'Inter', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+    --container:1280px;
+    --radius:2px;
+  }
+
+  *,*::before,*::after{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+  }
+
+  body{
+    margin:0;
+    background:var(--color-bg);
+    color:var(--color-text);
+    font-family:var(--font-body);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  img{max-width:100%; display:block;}
+  a{color:inherit; text-decoration:none;}
+  ul{list-style:none; margin:0; padding:0;}
+  button{font-family:inherit;}
+
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible{
+    outline:2px solid var(--color-accent);
+    outline-offset:3px;
+  }
+
+  .wrap{
+    max-width:var(--container);
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--color-accent);
+    margin:0 0 16px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px; height:1px;
+    background:var(--color-accent);
+    display:inline-block;
+  }
+
+  .section{padding:96px 0;}
+  .section-title{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:clamp(28px, 3.4vw, 44px);
+    line-height:1.15;
+    margin:0 0 20px;
+    max-width:820px;
+  }
+  .section-sub{
+    font-size:16px;
+    color:var(--color-text-dim);
+    max-width:560px;
+    margin:0 0 48px;
+  }
+
+  /* ================= HEADER ================= */
+  header.site-nav{
+    position:sticky; top:0; z-index:100;
+    background:rgba(23,15,14,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--color-line);
+  }
+  .site-nav__inner{
+    max-width:var(--container);
+    margin:0 auto;
+    padding:20px 32px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .logo{
+    font-family:var(--font-mono);
+    font-weight:700;
+    font-size:20px;
+    letter-spacing:-0.02em;
+  }
+  .logo span{color:var(--color-accent);}
+  nav.nav-links{
+    display:flex;
+    gap:40px;
+  }
+  nav.nav-links a{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:15px;
+    color:var(--color-text);
+    position:relative;
+    padding-bottom:4px;
+    transition:color .2s ease;
+  }
+  nav.nav-links a::after{
+    content:"";
+    position:absolute; left:0; bottom:0;
+    width:0; height:2px;
+    background:var(--color-accent);
+    transition:width .25s ease;
+  }
+  nav.nav-links a:hover{color:var(--color-accent);}
+  nav.nav-links a:hover::after{width:100%;}
+  nav.nav-links a.ext i{font-size:11px; margin-left:6px; opacity:.7;}
+
+  .nav-toggle{
+    display:none;
+    background:none;
+    border:1px solid var(--color-line);
+    color:var(--color-text);
+    width:42px; height:42px;
+    align-items:center; justify-content:center;
+    cursor:pointer;
+    font-size:18px;
+  }
+
+  .mobile-menu{
+    display:none;
+    flex-direction:column;
+    gap:0;
+    background:var(--color-bg-soft);
+    border-bottom:1px solid var(--color-line);
+  }
+  .mobile-menu a{
+    padding:18px 32px;
+    border-top:1px solid var(--color-line);
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:16px;
+  }
+  .mobile-menu.is-open{display:flex;}
+
+  /* ================= HERO ================= */
+  .hero{
+    padding:64px 0 0;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero__headline-wrap{
+    position:relative;
+    padding:16px 0 40px;
+  }
+  .hero__index{
+    font-family:var(--font-display);
+    font-weight:900;
+    font-size:clamp(56px, 9vw, 140px);
+    color:var(--color-text);
+    position:absolute;
+    left:0;
+    bottom:-4px;
+    line-height:0.8;
+    z-index:1;
+    opacity:0.95;
+    user-select:none;
+  }
+  .hero h1{
+    font-family:var(--font-display);
+    font-weight:900;
+    font-size:clamp(40px, 8.6vw, 108px);
+    line-height:0.98;
+    letter-spacing:-0.01em;
+    color:var(--color-accent);
+    margin:0;
+    position:relative;
+    z-index:2;
+    text-transform:lowercase;
+  }
+  .hero h1 span{display:block;}
+
+  .hero__row{
+    display:grid;
+    grid-template-columns:1.1fr 0.85fr 3px 1fr 1.3fr;
+    gap:24px;
+    align-items:end;
+    padding:48px 0 80px;
+    position:relative;
+  }
+  .divider-line{
+    align-self:stretch;
+    width:1px;
+    background:linear-gradient(180deg, transparent, var(--color-teal) 12%, var(--color-teal) 88%, transparent);
+    opacity:0.7;
+  }
+
+  .tag-card{
+    background:var(--color-paper);
+    color:var(--color-bg);
+    padding:22px 20px;
+    clip-path:polygon(0 0, calc(100% - 30px) 0, 100% 30px, 100% 100%, 0 100%);
+    position:relative;
+  }
+  .tag-card + .tag-card{margin-top:16px;}
+  .tag-card__icon{
+    position:absolute; top:14px; right:14px;
+    font-size:14px; color:var(--color-bg);
+    opacity:.6;
+  }
+  .tag-card p{
+    font-size:14px;
+    line-height:1.5;
+    margin:0 0 10px;
+    font-family:var(--font-mono);
+  }
+  .tag-card p:last-child{margin-bottom:0;}
+  .tag-card--small{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+  .tag-card--small strong{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:15px;
+  }
+  .tag-card--small span{
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--color-bg);
+    opacity:.75;
+  }
+
+  .scheme-col{
+    text-align:center;
+  }
+  .scheme-col .coord{
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--color-text-dim);
+    margin:14px 0 8px;
+    letter-spacing:0.05em;
+  }
+  .scheme-col svg{width:100%; max-width:120px; height:auto; margin:0 auto;}
+  .scheme-col .cap{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:16px;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    color:var(--color-text);
+    margin-top:0;
+  }
+
+  .index-col .mono-label{
+    font-family:var(--font-mono);
+    font-size:13px;
+    color:var(--color-text-dim);
+    margin-bottom:14px;
+  }
+  .barcode{
+    position:relative;
+    height:120px;
+    width:100%;
+    background-image:repeating-linear-gradient(90deg,
+      var(--color-paper) 0 3px, transparent 3px 6px,
+      var(--color-paper) 6px 7px, transparent 7px 13px,
+      var(--color-paper) 13px 18px, transparent 18px 20px,
+      var(--color-paper) 20px 22px, transparent 22px 29px,
+      var(--color-paper) 29px 34px, transparent 34px 36px);
+    opacity:0.9;
+  }
+  .barcode::before{
+    content:"";
+    position:absolute;
+    top:0; bottom:0;
+    left:24%;
+    width:3px;
+    background:var(--color-teal);
+  }
+  .barcode.mini{height:16px; margin-top:6px;}
+  .barcode.on-red{
+    background-image:repeating-linear-gradient(90deg,
+      #ffffff 0 3px, transparent 3px 6px,
+      #ffffff 6px 7px, transparent 7px 13px,
+      #ffffff 13px 18px, transparent 18px 20px,
+      #ffffff 20px 22px, transparent 22px 29px);
+  }
+  .barcode.on-red::before{display:none;}
+  .index-col .cap{
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:0.18em;
+    color:var(--color-text-dim);
+    margin-top:12px;
+  }
+
+  .panel-red{
+    background:var(--color-accent);
+    color:#fff;
+    padding:28px 24px;
+    min-height:280px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+  }
+  .panel-red h3{
+    font-family:var(--font-display);
+    font-weight:900;
+    font-size:clamp(26px,3vw,34px);
+    margin:0 0 6px;
+    text-transform:uppercase;
+    letter-spacing:-0.01em;
+  }
+  .panel-red p{
+    font-family:var(--font-mono);
+    font-weight:700;
+    font-size:13px;
+    letter-spacing:0.08em;
+    margin:0;
+    text-transform:uppercase;
+  }
+
+  .hero__badge{
+    position:absolute;
+    right:32px;
+    bottom:-40px;
+    width:140px; height:140px;
+    z-index:5;
+  }
+  .badge-link{
+    position:relative;
+    display:block;
+    width:100%; height:100%;
+    border-radius:50%;
+    background:var(--color-bg);
+    border:1px solid var(--color-accent);
+  }
+  .badge-link svg{
+    width:100%; height:100%;
+    animation:spin 16s linear infinite;
+  }
+  .badge-link:hover svg{animation-play-state:paused;}
+  .badge-link i{
+    position:absolute; top:50%; left:50%;
+    transform:translate(-50%,-50%);
+    color:var(--color-accent);
+    font-size:20px;
+    transition:transform .25s ease;
+  }
+  .badge-link:hover i{transform:translate(-50%,-50%) scale(1.2) rotate(45deg);}
+  @keyframes spin{from{transform:rotate(0deg);} to{transform:rotate(360deg);}}
+
+  .hero__rule{
+    border:none; border-top:1px solid var(--color-line);
+    margin:0;
+  }
+
+  .hide-on-mobile{display:block;}
+
+  /* ================= MANIFESTO ================= */
+  .manifesto{
+    padding:110px 0;
+    text-align:center;
+    border-bottom:1px solid var(--color-line);
+    background:
+      linear-gradient(var(--color-bg) 0 0),
+      repeating-linear-gradient(0deg, transparent 0 39px, var(--color-line) 39px 40px),
+      repeating-linear-gradient(90deg, transparent 0 39px, var(--color-line) 39px 40px);
+    background-blend-mode:normal;
+  }
+  .manifesto__statement{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:clamp(26px, 4.2vw, 52px);
+    line-height:1.2;
+    max-width:900px;
+    margin:0 auto 24px;
+  }
+  .manifesto__statement em{
+    color:var(--color-accent);
+    font-style:normal;
+  }
+  .manifesto__note{
+    font-size:15px;
+    color:var(--color-text-dim);
+    max-width:480px;
+    margin:0 auto;
+  }
+  .manifesto .eyebrow{justify-content:center;}
+  .manifesto .eyebrow::before{display:none;}
+
+  /* ================= PROBLEM ================= */
+  .problem-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:32px;
+  }
+  .problem-card{
+    border-top:2px solid var(--color-accent);
+    padding-top:22px;
+  }
+  .problem-card i{
+    font-size:22px;
+    color:var(--color-accent);
+    margin-bottom:18px;
+    display:block;
+  }
+  .problem-card p{
+    font-size:16px;
+    color:var(--color-text);
+    margin:0;
+  }
+
+  /* ================= METHOD ================= */
+  .method{background:var(--color-bg-soft); border-top:1px solid var(--color-line); border-bottom:1px solid var(--color-line);}
+  .steps{
+    display:grid;
+    grid-template-columns:repeat(7, 1fr);
+    gap:1px;
+    background:var(--color-line);
+    border:1px solid var(--color-line);
+    margin-bottom:80px;
+  }
+  .step{
+    background:var(--color-bg-soft);
+    padding:24px 18px;
+    min-height:220px;
+    display:flex;
+    flex-direction:column;
+  }
+  .step__num{
+    font-family:var(--font-mono);
+    color:var(--color-accent);
+    font-size:14px;
+    margin-bottom:16px;
+  }
+  .step__name{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:15px;
+    margin:0 0 10px;
+  }
+  .step__desc{
+    font-size:13px;
+    color:var(--color-text-dim);
+    margin:0;
+    line-height:1.4;
+  }
+
+  .products-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:16px;
+    margin-bottom:28px;
+  }
+  .products-head h3{
+    font-family:var(--font-display);
+    font-size:22px;
+    margin:0;
+  }
+  .products-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:16px;
+  }
+  .product-card{
+    border:1px solid var(--color-line);
+    padding:22px;
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:15px;
+    transition:border-color .2s ease, background .2s ease;
+  }
+  .product-card.is-highlight{
+    background:var(--color-accent);
+    border-color:var(--color-accent);
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .product-card.is-highlight a{
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:0.06em;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+  }
+  .badge-pill{
+    font-family:var(--font-mono);
+    font-size:10px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    background:rgba(255,255,255,0.2);
+    padding:3px 8px;
+    border-radius:20px;
+    align-self:flex-start;
+  }
+  .product-card:not(.is-highlight):hover{border-color:var(--color-accent);}
+
+  /* ================= CASES ================= */
+  .cases-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:28px;
+  }
+  .case-card{
+    border:1px solid var(--color-line);
+    display:flex;
+    flex-direction:column;
+    position:relative;
+  }
+  .case-card__tag{
+    position:absolute; top:12px; left:12px; z-index:2;
+    font-family:var(--font-mono);
+    font-size:10px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    background:var(--color-bg);
+    border:1px solid var(--color-accent);
+    color:var(--color-accent);
+    padding:4px 8px;
+  }
+  .case-card__media{
+    position:relative;
+    height:190px;
+    overflow:hidden;
+    background:var(--color-paper-dark);
+  }
+  .case-card__media img{
+    width:100%; height:100%;
+    object-fit:cover;
+    filter:grayscale(1) contrast(1.15) brightness(0.55);
+  }
+  .case-card__media::after{
+    content:"";
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(232,56,42,0.25), rgba(23,15,14,0.55));
+  }
+  .case-card__body{
+    padding:22px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    flex:1;
+  }
+  .case-card__industry{
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--color-text-dim);
+  }
+  .case-card__title{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:17px;
+    margin:0;
+  }
+  .case-card__metric{
+    font-family:var(--font-mono);
+    font-size:24px;
+    font-weight:700;
+    color:var(--color-accent);
+    margin:6px 0 0;
+  }
+  .case-card__metric span{
+    display:block;
+    font-family:var(--font-body);
+    font-size:12px;
+    color:var(--color-text-dim);
+    font-weight:400;
+    margin-top:2px;
+  }
+  .case-card__quote{
+    font-size:13px;
+    font-style:italic;
+    color:var(--color-text-dim);
+    border-left:2px solid var(--color-line);
+    padding-left:12px;
+    margin:0;
+  }
+
+  /* ================= DIAGNOSTIC CTA ================= */
+  .diagnostic{
+    background:var(--color-accent);
+    color:#fff;
+  }
+  .diagnostic .eyebrow{color:rgba(255,255,255,0.85);}
+  .diagnostic .eyebrow::before{background:rgba(255,255,255,0.85);}
+  .diagnostic__inner{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:40px;
+    flex-wrap:wrap;
+  }
+  .diagnostic h2{
+    font-family:var(--font-display);
+    font-weight:800;
+    font-size:clamp(28px,3.6vw,46px);
+    max-width:640px;
+    margin:0 0 16px;
+  }
+  .diagnostic p.desc{
+    max-width:560px;
+    font-size:15px;
+    opacity:.9;
+    margin:0;
+  }
+  .price-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin:28px 0;
+  }
+  .price-chip{
+    font-family:var(--font-mono);
+    font-size:13px;
+    border:1px solid rgba(255,255,255,0.5);
+    padding:8px 14px;
+  }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    font-family:var(--font-mono);
+    font-weight:700;
+    font-size:14px;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    padding:16px 26px;
+    border:1px solid currentColor;
+    transition:background .2s ease, color .2s ease;
+    white-space:nowrap;
+  }
+  .btn--light{color:#fff;}
+  .btn--light:hover{background:#fff; color:var(--color-accent-dark);}
+  .btn--dark{color:var(--color-bg); border-color:var(--color-bg);}
+  .btn--dark:hover{background:var(--color-bg); color:var(--color-text);}
+  .btn--outline{color:var(--color-text); border-color:var(--color-line);}
+  .btn--outline:hover{border-color:var(--color-accent); color:var(--color-accent);}
+
+  /* ================= CONTACT ================= */
+  .contact-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:64px;
+  }
+  .contact-list{margin-top:32px; display:flex; flex-direction:column; gap:18px;}
+  .contact-list a{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:17px;
+    padding-bottom:14px;
+    border-bottom:1px solid var(--color-line);
+    transition:color .2s ease;
+  }
+  .contact-list a:hover{color:var(--color-accent);}
+  .contact-list a i{
+    width:34px; height:34px;
+    border:1px solid var(--color-line);
+    display:flex; align-items:center; justify-content:center;
+    font-size:14px;
+    flex-shrink:0;
+  }
+
+  form.contact-form{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+  }
+  .field label{
+    display:block;
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--color-text-dim);
+    margin-bottom:8px;
+  }
+  .field input,
+  .field textarea{
+    width:100%;
+    background:transparent;
+    border:1px solid var(--color-line);
+    color:var(--color-text);
+    padding:14px 16px;
+    font-family:var(--font-body);
+    font-size:15px;
+    resize:vertical;
+  }
+  .field input:focus,
+  .field textarea:focus{border-color:var(--color-accent); outline:none;}
+  .form-note{
+    font-size:12px;
+    color:var(--color-text-dim);
+    margin-top:-6px;
+  }
+
+  /* ================= FOOTER ================= */
+  footer{
+    border-top:1px solid var(--color-line);
+    padding:48px 0;
+  }
+  .footer-inner{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:20px;
+  }
+  .footer-nav{display:flex; gap:28px; flex-wrap:wrap;}
+  .footer-nav a{font-size:13px; color:var(--color-text-dim);}
+  .footer-nav a:hover{color:var(--color-accent);}
+  .footer-legal{font-family:var(--font-mono); font-size:12px; color:var(--color-text-dim);}
+
+  /* ================= RESPONSIVE ================= */
+  @media (max-width:1024px){
+    .hero__row{grid-template-columns:1fr 1fr;}
+    .divider-line{display:none;}
+    .problem-grid{grid-template-columns:1fr;}
+    .steps{grid-template-columns:repeat(4,1fr);}
+    .products-grid{grid-template-columns:repeat(2,1fr);}
+    .cases-grid{grid-template-columns:1fr 1fr;}
+    .contact-grid{grid-template-columns:1fr; gap:40px;}
+  }
+
+  @media (max-width:900px){
+    nav.nav-links{display:none;}
+    .nav-toggle{display:flex;}
+  }
+
+  @media (max-width:720px){
+    .wrap{padding:0 20px;}
+    .section{padding:64px 0;}
+    .hero__row{grid-template-columns:1fr; gap:20px;}
+    .index-col, .scheme-col{display:none;}
+    .panel-red{min-height:auto;}
+    .hero__badge{position:static; width:110px; height:110px; margin:32px auto 0;}
+    .hero__headline-wrap{padding-bottom:24px;}
+    .hero__index{font-size:clamp(70px,26vw,120px);}
+    .steps{grid-template-columns:repeat(2,1fr);}
+    .products-grid{grid-template-columns:1fr;}
+    .cases-grid{grid-template-columns:1fr;}
+    .diagnostic__inner{align-items:flex-start;}
+    .site-nav__inner{padding:16px 20px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site-nav">
+  <div class="site-nav__inner">
+    <a href="#top" class="logo">iii<span>Del</span></a>
+    <nav class="nav-links">
+      <a href="#method">Метод</a>
+      <a href="#cases">Кейсы</a>
+      <a class="ext" href="https://iiidel-audit.vercel.app/" target="_blank" rel="noopener">Диагностика <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      <a href="#contact">Контакты</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Открыть меню" aria-expanded="false">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#method">Метод</a>
+    <a href="#cases">Кейсы</a>
+    <a href="https://iiidel-audit.vercel.app/" target="_blank" rel="noopener">Диагностика ↗</a>
+    <a href="#contact">Контакты</a>
+  </div>
+</header>
+
+<main>
+
+  <!-- ================= HERO ================= -->
+  <section class="hero" id="top">
+    <div class="wrap">
+      <div class="hero__headline-wrap">
+        <span class="hero__index" aria-hidden="true">01</span>
+        <h1><span>пусть ваш продукт</span><span>наконец услышат</span></h1>
+      </div>
+
+      <div class="hero__row">
+        <div>
+          <div class="tag-card">
+            <i class="fa-solid fa-arrow-up-right tag-card__icon"></i>
+            <p>Вы устали объяснять очевидное, а клиенты всё равно не видят ценность.</p>
+            <p>Мы переводим её на язык, который слышат с первого раза</p>
+          </div>
+          <div class="tag-card tag-card--small">
+            <strong>Инженерный перевод</strong>
+            <span>Схема → смысл</span>
+          </div>
+        </div>
+
+        <div class="scheme-col">
+          <svg viewBox="0 0 120 120" fill="none" aria-hidden="true">
+            <g stroke="var(--color-text)" stroke-width="1.5" opacity="0.6">
+              <path d="M10 26 V10 H26"/>
+              <path d="M94 10 H110 V26"/>
+              <path d="M110 94 V110 H94"/>
+              <path d="M26 110 H10 V94"/>
+              <circle cx="60" cy="60" r="15"/>
+              <path d="M60 20 V45 M60 75 V100 M20 60 H45 M75 60 H100"/>
+            </g>
+          </svg>
+          <div class="coord">X: 048&nbsp;&nbsp;Y: 012</div>
+          <div class="cap">Схема</div>
+        </div>
+
+        <div class="divider-line" aria-hidden="true"></div>
+
+        <div class="index-col">
+          <div class="mono-label">IIIDEL&nbsp;.048</div>
+          <div class="barcode" role="img" aria-label="Декоративный элемент — штрихкод"></div>
+          <div class="cap">Сложность</div>
+          <div class="barcode mini" style="width:60%;"></div>
+        </div>
+
+        <div class="panel-red">
+          <div>
+            <h3>Точно</h3>
+            <p>Без потерь</p>
+          </div>
+          <div class="barcode on-red mini"></div>
+        </div>
+
+        <div class="hero__badge">
+          <a href="#contact" class="badge-link" aria-label="Обсудить продукт — перейти к контактам">
+            <svg viewBox="0 0 200 200">
+              <defs>
+                <path id="circlePath" d="M100,100 m-82,0 a82,82 0 1,1 164,0 a82,82 0 1,1 -164,0"/>
+              </defs>
+              <text font-family="JetBrains Mono, monospace" font-size="12" letter-spacing="2" fill="var(--color-accent)">
+                <textPath href="#circlePath" startOffset="0%">ОБСУДИТЬ ПРОДУКТ · ОБСУДИТЬ ПРОДУКТ · </textPath>
+              </text>
+            </svg>
+            <i class="fa-solid fa-arrow-up-right" aria-hidden="true"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <hr class="hero__rule">
+  </section>
+
+  <!-- ================= MANIFESTO ================= -->
+  <section class="manifesto">
+    <div class="wrap">
+      <p class="eyebrow">Главное правило IIIDEL</p>
+      <p class="manifesto__statement">Мы не проектируем документы.<br><em>Мы проектируем понимание.</em></p>
+      <p class="manifesto__note">Презентация, КП, каталог или стенд — любой материал начинается с диагностики, а не с референсов и стиля.</p>
+    </div>
+  </section>
+
+  <!-- ================= PROBLEM ================= -->
+  <section class="section" id="problem">
+    <div class="wrap">
+      <p class="eyebrow">Проблема</p>
+      <h2 class="section-title">Инженеры знают продукт лучше всех. Покупатель — нет.</h2>
+      <p class="section-sub">Разрыв между тем, что умеет продукт, и тем, что видит в материалах ЛПР, — стоит компании реальных сделок.</p>
+      <div class="problem-grid">
+        <div class="problem-card">
+          <i class="fa-solid fa-file-lines"></i>
+          <p>Технические тексты и слайды говорят на языке характеристик — покупатель думает категориями результата и риска.</p>
+        </div>
+        <div class="problem-card">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+          <p>КП и презентации переписываются перед каждой встречей, потому что старые не сработали — а почему, никто не диагностировал.</p>
+        </div>
+        <div class="problem-card">
+          <i class="fa-solid fa-people-arrows"></i>
+          <p>Отдел продаж и инженеры описывают один продукт по-разному — на сайте, на стенде и в КП он выглядит как три разных продукта.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= METHOD ================= -->
+  <section class="section method" id="method">
+    <div class="wrap">
+      <p class="eyebrow">Метод</p>
+      <h2 class="section-title">Семь шагов — от диагностики до решения</h2>
+      <p class="section-sub">Прежде чем что-то нарисовать, мы разбираемся, почему аудитория пока не видит ценность продукта.</p>
+
+      <div class="steps">
+        <div class="step"><div class="step__num">01</div><div class="step__name">Диагностика</div><p class="step__desc">Разбираем, почему текущие материалы не убеждают</p></div>
+        <div class="step"><div class="step__num">02</div><div class="step__name">Поиск ценности</div><p class="step__desc">Находим, что продукт реально решает для покупателя</p></div>
+        <div class="step"><div class="step__num">03</div><div class="step__name">Инженерный перевод</div><p class="step__desc">Переводим характеристики в результат и риски</p></div>
+        <div class="step"><div class="step__num">04</div><div class="step__name">Архитектура смысла</div><p class="step__desc">Выстраиваем порядок аргументов под решение</p></div>
+        <div class="step"><div class="step__num">05</div><div class="step__name">Визуализация</div><p class="step__desc">Даём смыслу форму — слайд, макет, стенд</p></div>
+        <div class="step"><div class="step__num">06</div><div class="step__name">Проверка понимания</div><p class="step__desc">Тестируем, считывает ли аудитория нужный смысл</p></div>
+        <div class="step"><div class="step__num">07</div><div class="step__name">Принятие решения</div><p class="step__desc">Материал доводит ЛПР до решения, а не до вопросов</p></div>
+      </div>
+
+      <div class="products-head">
+        <h3>6 продуктов IIIDEL</h3>
+      </div>
+      <div class="products-grid">
+        <div class="product-card">Коммерческая презентация</div>
+        <div class="product-card">Коммерческое предложение</div>
+        <div class="product-card">Продуктовый каталог</div>
+        <div class="product-card">Выставочная коммуникация</div>
+        <div class="product-card">Бренд-коммуникация</div>
+        <div class="product-card is-highlight">
+          <span class="badge-pill">Входной продукт</span>
+          Аудит коммуникации — от $150
+          <a href="https://iiidel-audit.vercel.app/" target="_blank" rel="noopener">Перейти к аудиту <i class="fa-solid fa-arrow-up-right"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CASES ================= -->
+  <section class="section" id="cases">
+    <div class="wrap">
+      <p class="eyebrow">Кейсы</p>
+      <h2 class="section-title">Как это выглядит на реальных проектах</h2>
+      <p class="section-sub">Первые кейсы — в процессе оформления, добавляем по мере публикации. Ниже — формат карточки на живом примере.</p>
+
+      <div class="cases-grid">
+
+        <article class="case-card">
+          <span class="case-card__tag">Пример формата</span>
+          <div class="case-card__media">
+            <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80" alt="Промышленный склад" loading="lazy" onerror="this.style.display='none'">
+          </div>
+          <div class="case-card__body">
+            <div class="case-card__industry">Производитель промышленной арматуры</div>
+            <h3 class="case-card__title">Каталог, который перестали переписывать перед каждой выставкой</h3>
+            <p class="case-card__metric">×2<span>Скорость подготовки к выставке</span></p>
+            <p class="case-card__quote">«Теперь у отдела продаж и инженеров один документ — и один язык».</p>
+          </div>
+        </article>
+
+        <article class="case-card">
+          <span class="case-card__tag">Пример формата</span>
+          <div class="case-card__media">
+            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80" alt="Техническая плата крупным планом" loading="lazy" onerror="this.style.display='none'">
+          </div>
+          <div class="case-card__body">
+            <div class="case-card__industry">Производитель контрольно-измерительных приборов</div>
+            <h3 class="case-card__title">КП, которое согласовывают за дни, а не недели</h3>
+            <p class="case-card__metric">5&nbsp;дней<span>Вместо 3 недель на согласование</span></p>
+            <p class="case-card__quote">«Диагностика показала, где терялось решение — до дизайна дело даже не доходило».</p>
+          </div>
+        </article>
+
+        <article class="case-card">
+          <span class="case-card__tag">Пример формата</span>
+          <div class="case-card__media">
+            <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80" alt="Переговоры за столом" loading="lazy" onerror="this.style.display='none'">
+          </div>
+          <div class="case-card__body">
+            <div class="case-card__industry">Производитель промышленной автоматизации</div>
+            <h3 class="case-card__title">Презентация, после которой перестали задавать вопрос «а зачем нам это»</h3>
+            <p class="case-card__metric">+30%<span>Конверсия встреч в следующий шаг</span></p>
+            <p class="case-card__quote">«Мы наконец говорим на языке результата, а не характеристик».</p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= DIAGNOSTIC CTA ================= -->
+  <section class="section diagnostic">
+    <div class="wrap">
+      <p class="eyebrow">Аудит коммуникации</p>
+      <div class="diagnostic__inner">
+        <div>
+          <h2>Входная точка — без долгого договора и большого бюджета</h2>
+          <p class="desc">Разбираем один материал — сайт, презентацию или КП — и показываем, где именно аудитория теряет понимание продукта.</p>
+          <div class="price-row">
+            <span class="price-chip">$150</span>
+            <span class="price-chip">от 450 BYN</span>
+            <span class="price-chip">от 12 000 ₽</span>
+            <span class="price-chip">от 70 000 ₸</span>
+          </div>
+        </div>
+        <a href="https://iiidel-audit.vercel.app/" target="_blank" rel="noopener" class="btn btn--light">
+          Перейти к аудиту <i class="fa-solid fa-arrow-up-right"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section class="section" id="contact">
+    <div class="wrap">
+      <p class="eyebrow">Контакты</p>
+      <h2 class="section-title">Обсудить продукт</h2>
+      <p class="section-sub">Расскажите, какой материал не работает так, как должен, — предложим, с какого шага начать.</p>
+
+      <div class="contact-grid">
+        <div>
+          <div class="contact-list">
+            <a href="mailto:iiidel.b2b.visual@gmail.com"><i class="fa-solid fa-envelope"></i> iiidel.b2b.visual@gmail.com</a>
+            <a href="https://t.me/iiirinadel" target="_blank" rel="noopener"><i class="fa-brands fa-telegram"></i> @iiirinadel</a>
+          </div>
+        </div>
+
+        <form class="contact-form" id="contactForm">
+          <div class="field">
+            <label for="name">Имя</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div class="field">
+            <label for="reply">Email или Telegram для ответа</label>
+            <input type="text" id="reply" name="reply" required>
+          </div>
+          <div class="field">
+            <label for="message">Какой материал не работает</label>
+            <textarea id="message" name="message" rows="4" required></textarea>
+          </div>
+          <button type="submit" class="btn btn--outline">Отправить на почту <i class="fa-solid fa-arrow-up-right"></i></button>
+          <p class="form-note">Кнопка откроет почтовый клиент с заполненным письмом на iiidel.b2b.visual@gmail.com</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap footer-inner">
+    <a href="#top" class="logo">iii<span>Del</span></a>
+    <nav class="footer-nav">
+      <a href="#method">Метод</a>
+      <a href="#cases">Кейсы</a>
+      <a href="https://iiidel-audit.vercel.app/" target="_blank" rel="noopener">Диагностика</a>
+      <a href="#contact">Контакты</a>
+    </nav>
+    <div class="footer-legal">УНП КЕ5193781 · © 2026 IIIDEL</div>
+  </div>
+</footer>
+
+<script>
+  // Мобильное меню
+  const navToggle = document.getElementById('navToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+  navToggle.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.toggle('is-open');
+    navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    navToggle.innerHTML = isOpen ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-bars"></i>';
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      mobileMenu.classList.remove('is-open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      navToggle.innerHTML = '<i class="fa-solid fa-bars"></i>';
+    });
+  });
+
+  // Форма контакта — открывает почтовый клиент с заполненным письмом
+  const form = document.getElementById('contactForm');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const reply = document.getElementById('reply').value;
+    const message = document.getElementById('message').value;
+    const subject = encodeURIComponent('Обсудить продукт — заявка с сайта IIIDEL');
+    const body = encodeURIComponent(`Имя: ${name}\nСвязь: ${reply}\n\n${message}`);
+    window.location.href = `mailto:iiidel.b2b.visual@gmail.com?subject=${subject}&body=${body}`;
+  });
+</script>
+
+</body>
+</html>
