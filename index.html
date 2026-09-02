@@ -183,25 +183,24 @@
   .hero__headline-wrap{
     position:relative;
     padding:16px 0 40px;
+    text-align:center;
   }
   .hero__index{
     font-family:var(--font-display);
     font-weight:900;
-    font-size:clamp(56px, 9vw, 140px);
+    font-size:clamp(80px, 12vw, 190px);
     color:var(--color-text);
     position:absolute;
-    left:0;
-    bottom:-4px;
+    left:35%;
+    transform:translateX(-50%);
+    bottom:-50px;
     line-height:0.8;
-    z-index:1;
-    opacity:0.95;
+    z-index:3;
+    opacity:1;
     user-select:none;
   }
   .hero h1{
     font-family:var(--font-display);
-    font-weight:900;
-    font-size:clamp(40px, 8.6vw, 108px);
-    line-height:0.98;
     letter-spacing:-0.01em;
     color:var(--color-accent);
     margin:0;
@@ -210,6 +209,17 @@
     text-transform:lowercase;
   }
   .hero h1 span{display:block;}
+  .hero h1 .line-1{
+    font-weight:600;
+    font-size:clamp(32px, 7.8vw, 92px);
+    line-height:1.05;
+  }
+  .hero h1 .line-2{
+    font-weight:900;
+    font-size:clamp(50px, 10.2vw, 128px);
+    line-height:0.98;
+    margin-top:0.04em;
+  }
 
   .hero__row{
     display:grid;
@@ -849,7 +859,7 @@
     .panel-red{min-height:auto;}
     .hero__badge{position:static; width:110px; height:110px; margin:32px auto 0;}
     .hero__headline-wrap{padding-bottom:24px;}
-    .hero__index{font-size:clamp(70px,26vw,120px);}
+    .hero__index{font-size:clamp(70px,26vw,120px); left:50%;}
     .steps{grid-template-columns:repeat(2,1fr);}
     .products-grid{grid-template-columns:1fr;}
     .cases-grid{grid-template-columns:1fr;}
@@ -888,7 +898,7 @@
     <div class="wrap">
       <div class="hero__headline-wrap">
         <span class="hero__index" aria-hidden="true">01</span>
-        <h1><span>пусть ваш продукт</span><span>наконец услышат</span></h1>
+        <h1><span class="line-1">пусть ваш продукт</span><span class="line-2">наконец услышат</span></h1>
       </div>
 
       <div class="hero__row">
