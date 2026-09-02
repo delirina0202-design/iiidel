@@ -366,11 +366,11 @@
   }
 
   .hero__badge{
-    position:absolute;
+    position:fixed;
     right:32px;
-    bottom:-40px;
-    width:140px; height:140px;
-    z-index:5;
+    bottom:32px;
+    width:152px; height:152px;
+    z-index:999;
   }
   .badge-link{
     position:relative;
@@ -379,6 +379,7 @@
     border-radius:50%;
     background:var(--color-bg);
     border:1px solid var(--color-accent);
+    box-shadow:0 8px 24px rgba(0,0,0,0.5);
   }
   .badge-link svg{
     width:100%; height:100%;
@@ -389,7 +390,7 @@
     position:absolute; top:50%; left:50%;
     transform:translate(-50%,-50%);
     color:var(--color-accent);
-    font-size:20px;
+    font-size:22px;
     transition:transform .25s ease;
   }
   .badge-link:hover i{transform:translate(-50%,-50%) scale(1.2) rotate(45deg);}
@@ -857,7 +858,7 @@
     .hero__row{grid-template-columns:1fr; gap:20px;}
     .index-col, .scheme-col{display:none;}
     .panel-red{min-height:auto;}
-    .hero__badge{position:static; width:110px; height:110px; margin:32px auto 0;}
+    .hero__badge{width:104px; height:104px; right:16px; bottom:16px;}
     .hero__headline-wrap{padding-bottom:24px;}
     .hero__index{font-size:clamp(70px,26vw,120px); left:50%;}
     .steps{grid-template-columns:repeat(2,1fr);}
@@ -944,20 +945,6 @@
             <p>Без потерь</p>
           </div>
           <div class="barcode on-red mini"></div>
-        </div>
-
-        <div class="hero__badge">
-          <a href="#contact" class="badge-link" aria-label="Обсудить продукт — перейти к контактам">
-            <svg viewBox="0 0 200 200">
-              <defs>
-                <path id="circlePath" d="M100,100 m-82,0 a82,82 0 1,1 164,0 a82,82 0 1,1 -164,0"/>
-              </defs>
-              <text font-family="JetBrains Mono, monospace" font-size="12" letter-spacing="2" fill="var(--color-accent)">
-                <textPath href="#circlePath" startOffset="0%">ОБСУДИТЬ ПРОДУКТ · ОБСУДИТЬ ПРОДУКТ · </textPath>
-              </text>
-            </svg>
-            <i class="fa-solid fa-arrow-up-right" aria-hidden="true"></i>
-          </a>
         </div>
       </div>
     </div>
@@ -1148,6 +1135,20 @@
     <div class="footer-legal">УНП КЕ5193781 · © 2026 IIIDEL</div>
   </div>
 </footer>
+
+<div class="hero__badge">
+  <a href="#contact" class="badge-link" aria-label="Обсудить продукт — перейти к контактам">
+    <svg viewBox="0 0 200 200">
+      <defs>
+        <path id="circlePath" d="M100,100 m-82,0 a82,82 0 1,1 164,0 a82,82 0 1,1 -164,0"/>
+      </defs>
+      <text font-family="JetBrains Mono, monospace" font-size="15" letter-spacing="2" fill="var(--color-accent)">
+        <textPath href="#circlePath" startOffset="0%">ОБСУДИТЬ ПРОДУКТ · ОБСУДИТЬ ПРОДУКТ · </textPath>
+      </text>
+    </svg>
+    <i class="fa-solid fa-arrow-up-right" aria-hidden="true"></i>
+  </a>
+</div>
 
 <script>
   // Мобильное меню
